@@ -13,6 +13,7 @@ $(".rules-btn").click(function() {
 var questionNumber = 1;
 var totalScore = 0;
 var score = 0;
+var lastScore = 0;
 var answer;
 
 $(".start-button").click(function() {
@@ -55,13 +56,6 @@ function timer() {
     }, 1000);
 }
 
-if (score < 5) {
-    $("circle").css("stroke", "red");
-} else if (score > 5 && score < 8) {
-    $("circle").css("stroke", "orange");
-} else {
-    $("circle").css("stroke", "green");
-}
 
 function questionGenerator() {
     var num1 = String(Math.floor(Math.random() * 100) + 1);
@@ -82,6 +76,7 @@ function questionGenerator() {
     $("#option" + arrayWithoutAnswer[2]).html(answer + 5)
     if (questionNumber > 10) {
         new Audio("submit-button.mp3").play();
+        viewScore();
         $(".questions").addClass("invisible");
         $(".score").removeClass("invisible");
     }
@@ -93,13 +88,25 @@ $(".next").click(function() {
     $('.totalScore').html(score);
 });
 
+
 $(".submit").click(function() {
     new Audio("submit-button.mp3").play();
     $(".questions").addClass("invisible");
     $('.totalScore').html(score);
+    viewScore();
     $(".score").removeClass("invisible");
 })
 
 $(".start-again").click(function() {
     location.reload();
 })
+
+function viewScore() {
+    if (score <= 5) {
+        $("circle").css("stroke", "red");
+    } else if (score < 8) {
+        $("circle").css("stroke", "orange");
+    } else {
+        $("circle").css("stroke", "green");
+    }
+}
